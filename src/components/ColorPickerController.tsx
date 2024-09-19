@@ -26,6 +26,7 @@ const ColorPickerController: React.FC<ColorControllerProps> = ({
 				hideAdvancedSliders
 				hideColorGuide
 				hideInputType
+				className="pb-14"
 			/>
 		</figure>
 	);

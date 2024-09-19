@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Slider } from "./ui/slider";
 import ColorPickerController from "./ColorPickerController";
 
-interface UpdatedValueProps {
+interface IconControllerProps {
 	iconSize: number;
 	iconRotate: number;
 	iconColor: string;
@@ -24,7 +24,7 @@ const IconController = () => {
 	}
 
 	useEffect(() => {
-		const updatedValue: UpdatedValueProps = {
+		const updatedValue: IconControllerProps = {
 			...storageValue,
 			iconSize: size,
 			iconRotate: rotate,
