@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Slider } from "./ui/slider";
 import ColorPickerController from "./ColorPickerController";
-
-interface BgControllerProps {
-	bgRounded: number;
-	bgPadding: number;
-	bgColor: string;
-}
+import {
+	StorageProps,
+	UpdateStorageContext,
+} from "@/context/UpdateStorageContext";
 
 const BackgroundController = () => {
 	const [rounded, setRounded] = useState<number>(0);
 	const [padding, setPadding] = useState<number>(40);
 	const [color, setColor] = useState<string>("#000");
+
+	const context = useContext(UpdateStorageContext);
+
+	if (!context) {
+		throw new Error(
+			"UpdateStorageContext must be used within ClientProvider"
+		);
+	}
+
+	const { updateStorage, setUpdateStorage } = context;
 
 	let storageValue = null;
 
@@ -23,13 +31,13 @@ const BackgroundController = () => {
 	}
 
 	useEffect(() => {
-		const updatedValue: BgControllerProps = {
+		const updatedValue: StorageProps = {
 			...storageValue,
 			bgColor: color,
 			bgPadding: padding,
 			bgRounded: rounded,
 		};
-
+		setUpdateStorage(updatedValue);
 		localStorage.setItem("value", JSON.stringify(updatedValue));
 	}, [rounded, padding, color]);
 

@@ -3,6 +3,7 @@
 import BackgroundController from "@/components/BackgroundController";
 import Header from "@/components/Header";
 import IconController from "@/components/IconController";
+import LogoPreview from "@/components/LogoPreview";
 import SideNav from "@/components/SideNav";
 import { useState } from "react";
 
@@ -26,7 +27,9 @@ export default function Home() {
 						<BackgroundController />
 					)}
 				</div>
-				<div className="md:col-span-3 bg-red-100">Icon Preview</div>
+				<div className="md:col-span-3 pb-8 overflow-auto">
+					<LogoPreview />
+				</div>
 				<div className="md:col-span-1 bg-blue-100">Ads Banner</div>
 			</figure>
 		</>

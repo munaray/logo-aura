@@ -1,19 +1,27 @@
 import { Smile } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Slider } from "./ui/slider";
 import ColorPickerController from "./ColorPickerController";
+import {
+	StorageProps,
+	UpdateStorageContext,
+} from "@/context/UpdateStorageContext";
 
-interface IconControllerProps {
-	iconSize: number;
-	iconRotate: number;
-	iconColor: string;
-	icon: string;
-}
+// type IconControllerProps = Omit<StorageProps, "bgColor bgPadding bgRounded">;
 
 const IconController = () => {
 	const [size, setSize] = useState<number>(280);
 	const [rotate, setRotate] = useState<number>(0);
 	const [color, setColor] = useState<string>("rgba(255,255,255,1)");
+	const context = useContext(UpdateStorageContext);
+
+	if (!context) {
+		throw new Error(
+			"UpdateStorageContext must be used within ClientProvider"
+		);
+	}
+
+	const { updateStorage, setUpdateStorage } = context;
 
 	let storageValue = null;
 	try {
@@ -24,7 +32,7 @@ const IconController = () => {
 	}
 
 	useEffect(() => {
-		const updatedValue: IconControllerProps = {
+		const updatedValue: StorageProps = {
 			...storageValue,
 			iconSize: size,
 			iconRotate: rotate,
@@ -32,6 +40,7 @@ const IconController = () => {
 			icon: "Smile",
 		};
 
+		setUpdateStorage(updatedValue);
 		localStorage.setItem("value", JSON.stringify(updatedValue));
 	}, [size, rotate, color]);
 
